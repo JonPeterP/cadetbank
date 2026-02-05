@@ -17,4 +17,6 @@ Future<void> setupDependencies() async {
   serviceLocator.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(serviceLocator())); //singleton instance ng AuthRepository // serviceLocator() will automatically resolve the dependency ng AuthDataSource
 
   serviceLocator.registerLazySingleton<LoginUseCase>(() => LoginUseCase(serviceLocator())); //singleton instance ng LoginUseCase // serviceLocator() will automatically resolve the dependency ng AuthRepository
+
+
 }

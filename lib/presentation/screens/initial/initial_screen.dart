@@ -30,7 +30,7 @@ class InitialScreen extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(Routes.registration);
+                Navigator.of(context).pushNamed(Routes.home);
               },
               child: Text(
                 Strings.startAnAccount,
