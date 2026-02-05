@@ -4,6 +4,7 @@ import 'package:cadetbank/core/res/values/strings.dart';
 import 'package:cadetbank/presentation/screens/login/widgets/login_form.dart';
 import 'package:cadetbank/presentation/screens/login/widgets/login_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -11,24 +12,35 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(),
-    body: const Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dimens.s20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: Dimens.s100),
+    body: BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        if (state is LoginSuccess) {
+          Navigator.of(context).pushReplacementNamed(Routes.home);
+        } else if (state is LoginFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage)),
+          );
+        }
+      },
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: Dimens.s20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: Dimens.s100),
 
-          LoginLogo(),
+            LoginLogo(),
 
-          SizedBox(height: Dimens.s20),
+            SizedBox(height: Dimens.s20),
 
-          LoginForm(),
-        ],
+            LoginForm(),
+          ],
+        ),
       ),
     ),
     bottomNavigationBar: Padding(
       padding: const EdgeInsets.all(Dimens.s20),
-      child:  ElevatedButton(
+      child: ElevatedButton(
         onPressed: () {
           Navigator.of(context).pushReplacementNamed(Routes.home);
         },
