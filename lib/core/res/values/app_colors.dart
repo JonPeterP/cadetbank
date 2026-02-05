@@ -4,6 +4,26 @@ import 'dart:ui';
 class AppColors {
   const AppColors._();
 
+  // Valorant Primary Colors
+  static const valorantRed = Color(0xFFFF4655);
+  static const valorantRedBright = Color(0xFFFD4556);
+  static const valorantRedDark = Color(0xFFBD3944);
+  static const valorantTeal = Color(0xFF00C7B7);
+  static const valorantGold = Color(0xFFF0B232);
+
+  // Valorant Backgrounds
+  static const valorantDarkest = Color(0xFF0F1923);
+  static const valorantDark = Color(0xFF1C2128);
+  static const valorantDarkMed = Color(0xFF232D37);
+  static const valorantDarkLight = Color(0xFF2B3540);
+
+  // Valorant Neutrals
+  static const valorantWhite = Color(0xFFECE8E1);
+  static const valorantWhiteOff = Color(0xFFD4CFC5);
+  static const valorantGray = Color(0xFF5A6673);
+  static const valorantGrayLight = Color(0xFF7E8A96);
+  static const valorantGrayDark = Color(0xFF3A4551);
+
   // B
   static const black000000 = Color(0xFF000000);
   static const blackECEDEF = Color(0xFFECEDEF);
