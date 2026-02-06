@@ -146,10 +146,23 @@ class CollectionScreen extends StatelessWidget {
                     const SizedBox(height: Dimens.s32),
 
                     // ================= Weapon Skins =================
-                    Text(
-                      'Weapon Skins (${weapons.length})',
-                      style: Theme.of(context).textTheme.headlineSmall,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Weapon Skins (${weapons.length})',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.refresh, size: 20),
+                          tooltip: 'Reset all skins',
+                          onPressed: () {
+                            context.read<CollectionCubit>().resetWeaponSkins();
+                          },
+                        ),
+                      ],
                     ),
+
                     const SizedBox(height: Dimens.s12),
 
                     Builder(

@@ -77,4 +77,15 @@ class CollectionCubit extends Cubit<CollectionState> {
       orElse: () {},
     );
   }
+
+  void resetWeaponSkins() {
+    state.maybeMap(
+      loaded: (loadedState) {
+        emit(loadedState.copyWith(selectedWeaponSkins: {}));
+      },
+      orElse: () {},
+    );
+  }
+
+
 }
