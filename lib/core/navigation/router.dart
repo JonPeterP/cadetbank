@@ -1,6 +1,7 @@
 import 'package:cadetbank/core/di/service_locator.dart';
 import 'package:cadetbank/core/navigation/routes.dart';
 import 'package:cadetbank/presentation/screens/collection/collection_screen.dart';
+import 'package:cadetbank/presentation/screens/collection/cubits/collection/collection_cubit.dart';
 import 'package:cadetbank/presentation/screens/initial/initial_screen.dart';
 import 'package:cadetbank/presentation/screens/login/cubits/login/login_cubit.dart';
 import 'package:cadetbank/presentation/screens/login/cubits/login_form/login_form_cubit.dart';
@@ -22,7 +23,7 @@ class AppRouter {
       case Routes.home:
         return AppTransition.slide(child: const HomeScreen());
       case Routes.collection:
-        return AppTransition.slide(child: const CollectionScreen());
+        return AppTransition.slide(child: buildCollectionScreen());
       default:
         return AppTransition.none(child: const SizedBox.shrink());
     }
@@ -38,6 +39,15 @@ class AppRouter {
           ),
         ],
         child: const LoginScreen(),
+      );
+
+  static Widget buildCollectionScreen() => BlocProvider(
+        create: (_) => CollectionCubit(
+          getWeaponsUseCase: serviceLocator(),
+          getSpraysUseCase: serviceLocator(),
+          getPlayerCardsUseCase: serviceLocator(),
+        )..loadCollection(),
+        child: const CollectionScreen(),
       );
 }
 
