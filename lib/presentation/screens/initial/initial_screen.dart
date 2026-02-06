@@ -15,7 +15,7 @@ class InitialScreen extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimens.s50),
-          child: Image.asset(Assets.initLogo),
+          child: Image.asset(Assets.logo),
         )
       ),
     ),
@@ -33,37 +33,14 @@ class InitialScreen extends StatelessWidget {
                 Navigator.of(context).pushReplacementNamed(Routes.collection);
               },
               child: Text(
-                Strings.startAnAccount,
+                "Continue",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),
           ),
         ),
 
-        const SizedBox(height: Dimens.s10),
-
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.s20,
-          ),
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(Routes.login);
-              },
-              style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-                backgroundColor: const WidgetStatePropertyAll(AppColors.grayE1E5E8),
-              ),
-              child: Text(
-                Strings.login,
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-            ),
-          ),
-        ),
-
-        const SizedBox(height: Dimens.s20),
+        const SizedBox(height: Dimens.s30),
       ],
     ),
   );
