@@ -56,52 +56,113 @@ class CollectionScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: Dimens.s12),
-                    SizedBox(
-                      height: 120,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: weapons.length,
-                        separatorBuilder: (_, __) =>
-                            const SizedBox(width: Dimens.s8),
-                        itemBuilder: (context, index) {
-                          final weapon = weapons[index];
-                          return Container(
-                            width: 140,
-                            padding: const EdgeInsets.all(Dimens.s8),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[850],
-                              borderRadius:
-                                  BorderRadius.circular(Dimens.s8),
-                              border: Border.all(
-                                  color: Colors.grey[700]!, width: 1),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                if (weapon.displayIcon != null)
-                                  Expanded(
-                                    child: Image.network(
-                                      weapon.displayIcon!,
-                                      fit: BoxFit.contain,
-                                      errorBuilder: (_, __, ___) =>
-                                          const Icon(Icons.broken_image,
-                                              color: Colors.grey),
-                                    ),
+
+                    // Group weapons by category for mobile-friendly layout
+                    Builder(builder: (context) {
+                      final sidearms = <dynamic>[];
+                      final smgs = <dynamic>[];
+                      final shotguns = <dynamic>[];
+                      final rifles = <dynamic>[];
+                      final snipers = <dynamic>[];
+                      final machineGuns = <dynamic>[];
+                      final melees = <dynamic>[];
+
+                      for (final w in weapons) {
+                        final name = w.displayName.toString().toLowerCase();
+                        if (['classic', 'shorty', 'frenzy', 'ghost', 'bandit', 'sheriff']
+                            .contains(name)) {
+                          sidearms.add(w);
+                        } else if (['stinger', 'spectre'].contains(name)) {
+                          smgs.add(w);
+                        } else if (['bucky', 'judge'].contains(name)) {
+                          shotguns.add(w);
+                        } else if (['bulldog', 'guardian', 'phantom', 'vandal']
+                            .contains(name)) {
+                          rifles.add(w);
+                        } else if (['marshal', 'outlaw', 'operator']
+                            .contains(name)) {
+                          snipers.add(w);
+                        } else if (['ares', 'odin'].contains(name)) {
+                          machineGuns.add(w);
+                        } else if (['melee', 'knife'].contains(name)) {
+                          melees.add(w);
+                        } else {
+                          // fallback: put into rifles
+                          rifles.add(w);
+                        }
+                      }
+
+                      Widget buildCategory(String title, List list) {
+                        if (list.isEmpty) return const SizedBox.shrink();
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(title,
+                                style: Theme.of(context).textTheme.titleMedium),
+                            const SizedBox(height: Dimens.s8),
+                            GridView.count(
+                              crossAxisCount: 3,
+                              mainAxisSpacing: Dimens.s8,
+                              crossAxisSpacing: Dimens.s8,
+                              childAspectRatio: 1,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: list.map((weapon) {
+                                return Container(
+                                  padding: const EdgeInsets.all(Dimens.s8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[850],
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.s8),
+                                    border: Border.all(
+                                        color: Colors.grey[700]!, width: 1),
                                   ),
-                                const SizedBox(height: Dimens.s4),
-                                Text(
-                                  weapon.displayName,
-                                  style: const TextStyle(fontSize: 11),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      if (weapon.displayIcon != null)
+                                        Expanded(
+                                          child: Image.network(
+                                            weapon.displayIcon!,
+                                            fit: BoxFit.contain,
+                                            errorBuilder: (_, __, ___) =>
+                                                const Icon(Icons.broken_image,
+                                                    color: Colors.grey),
+                                          ),
+                                        ),
+                                      const SizedBox(height: Dimens.s4),
+                                      Text(
+                                        weapon.displayName,
+                                        style: const TextStyle(fontSize: 11),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
                             ),
-                          );
-                        },
-                      ),
-                    ),
+                            const SizedBox(height: Dimens.s16),
+                          ],
+                        );
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildCategory('Sidearms', sidearms),
+                          buildCategory('SMGs', smgs),
+                          buildCategory('Shotguns', shotguns),
+                          buildCategory('Rifles', rifles),
+                          buildCategory('Sniper Rifles', snipers),
+                          buildCategory('Machine Guns', machineGuns),
+                          buildCategory('Melee', melees),
+                        ],
+                      );
+                    }),
                     const SizedBox(height: Dimens.s32),
 
                     // Player Cards Section

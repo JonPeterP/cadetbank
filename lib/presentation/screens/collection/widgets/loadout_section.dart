@@ -150,7 +150,7 @@ class LoadoutSection extends StatelessWidget {
   }
 
   Widget _buildSkinsGrid() {
-    // Mobile-friendly grouped sections by weapon class
+    // Mobile-friendly grouped sections by weapon class with skin category splits
     final Map<String, List<String>> categories = {
       'Sidearms': ['Classic', 'Shorty', 'Frenzy', 'Ghost', 'Bandit', 'Sheriff'],
       'SMGs': ['Stinger', 'Spectre'],
@@ -161,7 +161,29 @@ class LoadoutSection extends StatelessWidget {
       'Melee': ['Knife'],
     };
 
-    // For now we'll show a default placeholder skin if no specific skin data exists.
+    final List<String> rarities = [
+      'Standard',
+      'Select',
+      'Deluxe',
+      'Premium',
+      'Exclusive',
+    ];
+
+    Color colorForRarity(String r) {
+      switch (r) {
+        case 'Select':
+          return Colors.blue;
+        case 'Deluxe':
+          return Colors.cyan;
+        case 'Premium':
+          return Colors.orange;
+        case 'Exclusive':
+          return Colors.purple;
+        default:
+          return Colors.grey;
+      }
+    }
+
     Widget buildCategory(String title, List<String> weapons) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,23 +199,54 @@ class LoadoutSection extends StatelessWidget {
               ),
             ),
           ),
+
+          // Weapons grid (multiple rows) for this category
+          GridView.count(
+            crossAxisCount: 3,
+            mainAxisSpacing: Dimens.s8,
+            crossAxisSpacing: Dimens.s8,
+            childAspectRatio: 1.1,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.s4),
+            children: weapons.map((weapon) {
+              return SkinCard(
+                skinName: 'Default',
+                weaponType: weapon,
+                rarity: 'Standard',
+                rarityColor: colorForRarity('Standard'),
+                onTap: () {},
+              );
+            }).toList(),
+          ),
+
+          const SizedBox(height: Dimens.s8),
+
+          // Split by skin categories (rarities) for the whole class
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.s4),
+            child: Text(
+              'Skin Categories',
+              style: TextStyle(color: Colors.grey[300], fontSize: Dimens.s11),
+            ),
+          ),
+          const SizedBox(height: Dimens.s8),
           SizedBox(
-            height: 160,
+            height: 140,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: weapons.length,
+              itemCount: rarities.length,
               separatorBuilder: (_, __) => const SizedBox(width: Dimens.s12),
-              itemBuilder: (context, index) {
-                final weapon = weapons[index];
-
-                // Placeholder: no skins assigned yet, so show "Default" skin
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.s4),
+              itemBuilder: (context, idx) {
+                final rarity = rarities[idx];
                 return SizedBox(
                   width: 140,
                   child: SkinCard(
-                    skinName: 'Default',
-                    weaponType: weapon,
-                    rarity: 'Standard',
-                    rarityColor: Colors.grey,
+                    skinName: rarity,
+                    weaponType: title,
+                    rarity: rarity,
+                    rarityColor: colorForRarity(rarity),
                     onTap: () {},
                   ),
                 );
@@ -208,7 +261,7 @@ class LoadoutSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: categories.entries
           .map((e) => Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.s16),
+                padding: const EdgeInsets.only(bottom: Dimens.s8),
                 child: buildCategory(e.key, e.value),
               ))
           .toList(),
@@ -216,97 +269,106 @@ class LoadoutSection extends StatelessWidget {
   }
 
   Widget _buildPlayerCardsGrid() {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        final cards = [
-          ('NOIR Arctic', 'Sage'),
-          ('Protocol 781-A', 'Cypher'),
-          ('Reckoning', 'Phoenix'),
-          ('Surge', 'Jett'),
-          ('Sovereign', 'Reyna'),
-        ];
+    final cards = [
+      ('NOIR Arctic', 'Sage'),
+      ('Protocol 781-A', 'Cypher'),
+      ('Reckoning', 'Phoenix'),
+      ('Surge', 'Jett'),
+      ('Sovereign', 'Reyna'),
+    ];
 
-        final (cardName, character) = cards[index];
+    return SizedBox(
+      height: 150,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: cards.length,
+        itemBuilder: (context, index) {
+          final (cardName, character) = cards[index];
 
-        return Padding(
-          padding: const EdgeInsets.only(right: Dimens.s12),
-          child: SizedBox(
-            width: 120,
-            child: PlayerCardWidget(
-              cardName: cardName,
-              characterName: character,
-              onTap: () {},
+          return Padding(
+            padding: const EdgeInsets.only(right: Dimens.s12),
+            child: SizedBox(
+              width: 120,
+              child: PlayerCardWidget(
+                cardName: cardName,
+                characterName: character,
+                onTap: () {},
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
   Widget _buildTitlesGrid() {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        final titles = [
-          ('Valorant Badge Holder', 1),
-          ('Iron Ranked', 2),
-          ('Bronze Ranked', 3),
-          ('Silver Ranked', 4),
-          ('Episode Winner', 5),
-        ];
+    final titles = [
+      ('Valorant Badge Holder', 1),
+      ('Iron Ranked', 2),
+      ('Bronze Ranked', 3),
+      ('Silver Ranked', 4),
+      ('Episode Winner', 5),
+    ];
 
-        final (title, number) = titles[index];
+    return SizedBox(
+      height: 120,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: titles.length,
+        itemBuilder: (context, index) {
+          final (title, number) = titles[index];
 
-        return Padding(
-          padding: const EdgeInsets.only(right: Dimens.s12),
-          child: SizedBox(
-            width: 130,
-            child: TitleCard(
-              titleText: title,
-              titleNumber: number,
-              onTap: () {},
+          return Padding(
+            padding: const EdgeInsets.only(right: Dimens.s12),
+            child: SizedBox(
+              width: 130,
+              child: TitleCard(
+                titleText: title,
+                titleNumber: number,
+                onTap: () {},
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
   Widget _buildSprayGrid() {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: Dimens.s12,
-        crossAxisSpacing: Dimens.s12,
-        childAspectRatio: 0.85,
+    final sprays = [
+      ('Preround Spray #1', 'Preround'),
+      ('Midround Spray #1', 'Midround'),
+      ('Postround Spray #1', 'Postround'),
+      ('Ace Spray', 'Postround'),
+      ('Plant Spray', 'Midround'),
+      ('Defuse Spray', 'Postround'),
+      ('Freeze Spray', 'Preround'),
+      ('Gamer Spray', 'Midround'),
+      ('Radiant Spray', 'Postround'),
+    ];
+
+    return SizedBox(
+      height: 180,
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: Dimens.s12,
+          crossAxisSpacing: Dimens.s12,
+          childAspectRatio: 0.85,
+        ),
+        itemCount: sprays.length,
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.s4),
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          final (name, type) = sprays[index];
+
+          return SprayItem(
+            sprayName: name,
+            sprayType: type,
+            onTap: () {},
+          );
+        },
       ),
-      itemCount: 9,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        final sprays = [
-          ('Preround Spray #1', 'Preround'),
-          ('Midround Spray #1', 'Midround'),
-          ('Postround Spray #1', 'Postround'),
-          ('Ace Spray', 'Postround'),
-          ('Plant Spray', 'Midround'),
-          ('Defuse Spray', 'Postround'),
-          ('Freeze Spray', 'Preround'),
-          ('Gamer Spray', 'Midround'),
-          ('Radiant Spray', 'Postround'),
-        ];
-
-        final (name, type) = sprays[index];
-
-        return SprayItem(
-          sprayName: name,
-          sprayType: type,
-          onTap: () {},
-        );
-      },
     );
   }
 }
