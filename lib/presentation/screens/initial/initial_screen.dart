@@ -44,7 +44,7 @@ class InitialScreen extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: Dimens.s30),
+        const SizedBox(height: Dimens.s60),
       ],
     ),
   );
