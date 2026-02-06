@@ -31,14 +31,50 @@ class CollectionCubit extends Cubit<CollectionState> {
       final error = weaponsResult.errorOrNull ??
           spraysResult.errorOrNull ??
           playerCardsResult.errorOrNull;
-      emit(CollectionState.failed(error?.message ?? 'Failed to load collection'));
+
+      emit(
+        CollectionState.failed(
+          error?.message ?? 'Failed to load collection',
+        ),
+      );
       return;
     }
 
-    emit(CollectionState.loaded(
-      weapons: weaponsResult.valueOrNull ?? <WeaponResponse>[],
-      sprays: spraysResult.valueOrNull ?? <SprayResponse>[],
-      playerCards: playerCardsResult.valueOrNull ?? <PlayerCardResponse>[],
-    ));
+    emit(
+      CollectionState.loaded(
+        weapons: weaponsResult.valueOrNull ?? <WeaponResponse>[],
+        sprays: spraysResult.valueOrNull ?? <SprayResponse>[],
+        playerCards: playerCardsResult.valueOrNull ?? <PlayerCardResponse>[],
+        selectedWeaponSkins: {}, // start empty
+      ),
+    );
+  }
+
+  // ✅ NEW METHOD
+  void selectWeaponSkin(WeaponResponse weapon, dynamic skin) {
+    state.maybeWhen(
+      loaded: (
+          weapons,
+          sprays,
+          playerCards,
+          selectedWeaponSkins,
+          ) {
+        final updatedSelections = Map<String, dynamic>.from(
+          selectedWeaponSkins,
+        );
+
+        updatedSelections[weapon.uuid] = skin;
+
+        emit(
+          CollectionState.loaded(
+            weapons: weapons,
+            sprays: sprays,
+            playerCards: playerCards,
+            selectedWeaponSkins: updatedSelections,
+          ),
+        );
+      },
+      orElse: () {},
+    );
   }
 }

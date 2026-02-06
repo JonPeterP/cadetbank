@@ -20,8 +20,11 @@ mixin _$CollectionState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<WeaponResponse> weapons,
-            List<SprayResponse> sprays, List<PlayerCardResponse> playerCards)
+    required TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) =>
@@ -30,8 +33,11 @@ mixin _$CollectionState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult? Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) =>
@@ -40,8 +46,11 @@ mixin _$CollectionState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
@@ -138,8 +147,11 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<WeaponResponse> weapons,
-            List<SprayResponse> sprays, List<PlayerCardResponse> playerCards)
+    required TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) {
@@ -151,8 +163,11 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult? Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) {
@@ -164,8 +179,11 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
@@ -261,8 +279,11 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<WeaponResponse> weapons,
-            List<SprayResponse> sprays, List<PlayerCardResponse> playerCards)
+    required TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) {
@@ -274,8 +295,11 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult? Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) {
@@ -287,8 +311,11 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
@@ -350,7 +377,8 @@ abstract class _$$LoadedImplCopyWith<$Res> {
   $Res call(
       {List<WeaponResponse> weapons,
       List<SprayResponse> sprays,
-      List<PlayerCardResponse> playerCards});
+      List<PlayerCardResponse> playerCards,
+      Map<String, dynamic> selectedWeaponSkins});
 }
 
 /// @nodoc
@@ -369,6 +397,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
     Object? weapons = null,
     Object? sprays = null,
     Object? playerCards = null,
+    Object? selectedWeaponSkins = null,
   }) {
     return _then(_$LoadedImpl(
       weapons: null == weapons
@@ -383,6 +412,10 @@ class __$$LoadedImplCopyWithImpl<$Res>
           ? _value._playerCards
           : playerCards // ignore: cast_nullable_to_non_nullable
               as List<PlayerCardResponse>,
+      selectedWeaponSkins: null == selectedWeaponSkins
+          ? _value._selectedWeaponSkins
+          : selectedWeaponSkins // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
     ));
   }
 }
@@ -393,10 +426,12 @@ class _$LoadedImpl implements _Loaded {
   const _$LoadedImpl(
       {required final List<WeaponResponse> weapons,
       required final List<SprayResponse> sprays,
-      required final List<PlayerCardResponse> playerCards})
+      required final List<PlayerCardResponse> playerCards,
+      final Map<String, dynamic> selectedWeaponSkins = const {}})
       : _weapons = weapons,
         _sprays = sprays,
-        _playerCards = playerCards;
+        _playerCards = playerCards,
+        _selectedWeaponSkins = selectedWeaponSkins;
 
   final List<WeaponResponse> _weapons;
   @override
@@ -422,9 +457,19 @@ class _$LoadedImpl implements _Loaded {
     return EqualUnmodifiableListView(_playerCards);
   }
 
+  final Map<String, dynamic> _selectedWeaponSkins;
+  @override
+  @JsonKey()
+  Map<String, dynamic> get selectedWeaponSkins {
+    if (_selectedWeaponSkins is EqualUnmodifiableMapView)
+      return _selectedWeaponSkins;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_selectedWeaponSkins);
+  }
+
   @override
   String toString() {
-    return 'CollectionState.loaded(weapons: $weapons, sprays: $sprays, playerCards: $playerCards)';
+    return 'CollectionState.loaded(weapons: $weapons, sprays: $sprays, playerCards: $playerCards, selectedWeaponSkins: $selectedWeaponSkins)';
   }
 
   @override
@@ -435,7 +480,9 @@ class _$LoadedImpl implements _Loaded {
             const DeepCollectionEquality().equals(other._weapons, _weapons) &&
             const DeepCollectionEquality().equals(other._sprays, _sprays) &&
             const DeepCollectionEquality()
-                .equals(other._playerCards, _playerCards));
+                .equals(other._playerCards, _playerCards) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedWeaponSkins, _selectedWeaponSkins));
   }
 
   @override
@@ -443,7 +490,8 @@ class _$LoadedImpl implements _Loaded {
       runtimeType,
       const DeepCollectionEquality().hash(_weapons),
       const DeepCollectionEquality().hash(_sprays),
-      const DeepCollectionEquality().hash(_playerCards));
+      const DeepCollectionEquality().hash(_playerCards),
+      const DeepCollectionEquality().hash(_selectedWeaponSkins));
 
   /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -458,12 +506,15 @@ class _$LoadedImpl implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<WeaponResponse> weapons,
-            List<SprayResponse> sprays, List<PlayerCardResponse> playerCards)
+    required TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) {
-    return loaded(weapons, sprays, playerCards);
+    return loaded(weapons, sprays, playerCards, selectedWeaponSkins);
   }
 
   @override
@@ -471,12 +522,15 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult? Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) {
-    return loaded?.call(weapons, sprays, playerCards);
+    return loaded?.call(weapons, sprays, playerCards, selectedWeaponSkins);
   }
 
   @override
@@ -484,14 +538,17 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(weapons, sprays, playerCards);
+      return loaded(weapons, sprays, playerCards, selectedWeaponSkins);
     }
     return orElse();
   }
@@ -538,11 +595,13 @@ abstract class _Loaded implements CollectionState {
   const factory _Loaded(
       {required final List<WeaponResponse> weapons,
       required final List<SprayResponse> sprays,
-      required final List<PlayerCardResponse> playerCards}) = _$LoadedImpl;
+      required final List<PlayerCardResponse> playerCards,
+      final Map<String, dynamic> selectedWeaponSkins}) = _$LoadedImpl;
 
   List<WeaponResponse> get weapons;
   List<SprayResponse> get sprays;
   List<PlayerCardResponse> get playerCards;
+  Map<String, dynamic> get selectedWeaponSkins;
 
   /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -622,8 +681,11 @@ class _$FailedImpl implements _Failed {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<WeaponResponse> weapons,
-            List<SprayResponse> sprays, List<PlayerCardResponse> playerCards)
+    required TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) {
@@ -635,8 +697,11 @@ class _$FailedImpl implements _Failed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult? Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) {
@@ -648,8 +713,11 @@ class _$FailedImpl implements _Failed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<WeaponResponse> weapons, List<SprayResponse> sprays,
-            List<PlayerCardResponse> playerCards)?
+    TResult Function(
+            List<WeaponResponse> weapons,
+            List<SprayResponse> sprays,
+            List<PlayerCardResponse> playerCards,
+            Map<String, dynamic> selectedWeaponSkins)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
