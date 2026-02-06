@@ -34,11 +34,8 @@ class CollectionScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: Dimens.s12),
-              const SizedBox(
-                height: 200,
-                child: LoadoutSection(
-                  isSkinsSection: true,
-                ),
+              const LoadoutSection(
+                isSkinsSection: true,
               ),
               const SizedBox(height: Dimens.s32),
 

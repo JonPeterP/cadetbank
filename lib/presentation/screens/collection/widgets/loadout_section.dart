@@ -150,36 +150,68 @@ class LoadoutSection extends StatelessWidget {
   }
 
   Widget _buildSkinsGrid() {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: Dimens.s12,
-        crossAxisSpacing: Dimens.s12,
-        childAspectRatio: 0.75,
-      ),
-      itemCount: 6,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        final skins = [
-          ('Reaver', 'Phantom', 'Premium', Colors.red),
-          ('Prime', 'Vandal', 'Premium', Colors.green),
-          ('Ego', 'Operator', 'Exclusive', Colors.purple),
-          ('Forsaken', 'Judge', 'Exclusive', Colors.orange),
-          ('Neptune', 'Stinger', 'Deluxe', Colors.cyan),
-          ('Sensei', 'Sheriff', 'Select', Colors.blue),
-        ];
+    // Mobile-friendly grouped sections by weapon class
+    final Map<String, List<String>> categories = {
+      'Sidearms': ['Classic', 'Shorty', 'Frenzy', 'Ghost', 'Bandit', 'Sheriff'],
+      'SMGs': ['Stinger', 'Spectre'],
+      'Shotguns': ['Bucky', 'Judge'],
+      'Rifles': ['Bulldog', 'Guardian', 'Phantom', 'Vandal'],
+      'Sniper Rifles': ['Marshal', 'Outlaw', 'Operator'],
+      'Machine Guns': ['Ares', 'Odin'],
+      'Melee': ['Knife'],
+    };
 
-        final (name, weapon, rarity, color) = skins[index];
+    // For now we'll show a default placeholder skin if no specific skin data exists.
+    Widget buildCategory(String title, List<String> weapons) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: Dimens.s8),
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: Dimens.s14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 160,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: weapons.length,
+              separatorBuilder: (_, __) => const SizedBox(width: Dimens.s12),
+              itemBuilder: (context, index) {
+                final weapon = weapons[index];
 
-        return SkinCard(
-          skinName: name,
-          weaponType: weapon,
-          rarity: rarity,
-          rarityColor: color,
-          onTap: () {},
-        );
-      },
+                // Placeholder: no skins assigned yet, so show "Default" skin
+                return SizedBox(
+                  width: 140,
+                  child: SkinCard(
+                    skinName: 'Default',
+                    weaponType: weapon,
+                    rarity: 'Standard',
+                    rarityColor: Colors.grey,
+                    onTap: () {},
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: categories.entries
+          .map((e) => Padding(
+                padding: const EdgeInsets.only(bottom: Dimens.s16),
+                child: buildCategory(e.key, e.value),
+              ))
+          .toList(),
     );
   }
 
