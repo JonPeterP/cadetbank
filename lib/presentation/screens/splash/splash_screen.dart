@@ -29,13 +29,13 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             // Replace with your logo asset
             Image.asset(
-              Assets.initLogo,
-              width: 120,
-              height: 120,
+              Assets.logo,
+              width: 600,
+              height: 600,
             ),
             const SizedBox(height: 24),
             const Text(
-              'CADETBANK',
+              'VALOVAULT',
               style: TextStyle(
                 color: AppColors.valorantRed,
                 fontSize: 32,
@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Powered by Valorant',
+              'Your Arsenal, Unlocked.',
               style: TextStyle(
                 color: AppColors.valorantWhiteOff,
                 fontSize: 16,
