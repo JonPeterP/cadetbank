@@ -15,4 +15,7 @@ class Assets {
 
   // Z
   static const String ziggyLoader = '$_jsonPath/anim_ziggy_loader.json';
+
+  // LT
+  static const String logo = '$_pngPath/ValoVault-Logo.png';
 }
