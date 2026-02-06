@@ -1,5 +1,6 @@
 import 'package:cadetbank/core/di/service_locator.dart';
 import 'package:cadetbank/core/navigation/routes.dart';
+import 'package:cadetbank/presentation/screens/collection/collection_screen.dart';
 import 'package:cadetbank/presentation/screens/initial/initial_screen.dart';
 import 'package:cadetbank/presentation/screens/login/cubits/login/login_cubit.dart';
 import 'package:cadetbank/presentation/screens/login/cubits/login_form/login_form_cubit.dart';
@@ -20,6 +21,8 @@ class AppRouter {
         return AppTransition.slide(child: const RegistrationScreen());
       case Routes.home:
         return AppTransition.slide(child: const HomeScreen());
+      case Routes.collection:
+        return AppTransition.slide(child: const CollectionScreen());
       default:
         return AppTransition.none(child: const SizedBox.shrink());
     }

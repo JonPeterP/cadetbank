@@ -13,4 +13,7 @@ class Routes {
 
   // H
   static const String home = "homeScreen";
+
+  // C
+  static const String collection = "collectionScreen";
 }
