@@ -14,6 +14,8 @@ class CollectionState with _$CollectionState {
     required List<SprayResponse> sprays,
     required List<PlayerCardResponse> playerCards,
     @Default({}) Map<String, dynamic> selectedWeaponSkins,
+    PlayerCardResponse? selectedPlayerCard,
+    @Default({}) Map<int, SprayResponse> selectedSprays,
   }) = _Loaded;
   const factory CollectionState.failed(String errorMessage) = _Failed;
 }

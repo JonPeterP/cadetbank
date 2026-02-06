@@ -1,7 +1,9 @@
 import 'package:cadetbank/core/res/values/dimens.dart';
 import 'package:cadetbank/presentation/screens/collection/cubits/collection/collection_cubit.dart';
 import 'package:cadetbank/presentation/screens/collection/cubits/collection/collection_state.dart';
+import 'package:cadetbank/presentation/screens/player_cards/player_card_display_screen.dart';
 import 'package:cadetbank/presentation/screens/skins/skin_display_screen.dart';
+import 'package:cadetbank/presentation/screens/sprays/spray_display_screen.dart';
 import 'package:cadetbank/presentation/widgets/ziggy/ziggy_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +38,9 @@ class CollectionScreen extends StatelessWidget {
                 ],
               ),
             ),
-            loaded: (weapons, sprays, playerCards, selectedWeaponSkins) {
+            loaded: (weapons, sprays, playerCards, selectedWeaponSkins,
+                selectedPlayerCard, selectedSprays) {
+              final displayCard = selectedPlayerCard ?? (playerCards.isNotEmpty ? playerCards[0] : null);
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(Dimens.s16),
                 child: Column(
@@ -44,46 +48,74 @@ class CollectionScreen extends StatelessWidget {
                   children: [
                     // ================= Player Card =================
                     Text(
-                      'Player Card (${playerCards.length})',
+                      'Player Card',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: Dimens.s12),
-                    if (playerCards.isNotEmpty)
-                      Container(
-                        height: 180,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[850],
-                          borderRadius: BorderRadius.circular(Dimens.s8),
-                          border: Border.all(
-                            color: Colors.grey[700]!,
-                            width: 1,
-                          ),
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          children: [
-                            if (playerCards[0].wideArt != null)
-                              Expanded(
-                                child: Image.network(
-                                  playerCards[0].wideArt!,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  errorBuilder: (_, __, ___) =>
-                                      const Icon(Icons.broken_image,
-                                          color: Colors.grey),
-                                ),
-                              ),
-                            Padding(
-                              padding: const EdgeInsets.all(Dimens.s8),
-                              child: Text(
-                                playerCards[0].displayName,
-                                style: const TextStyle(fontSize: 12),
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                    if (displayCard != null)
+                      GestureDetector(
+                        onTap: () async {
+                          final chosenCard = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PlayerCardDisplayScreen(
+                                playerCards: playerCards,
                               ),
                             ),
-                          ],
+                          );
+                          if (chosenCard != null) {
+                            context
+                                .read<CollectionCubit>()
+                                .selectPlayerCard(chosenCard);
+                          }
+                        },
+                        child: Container(
+                          height: 180,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(Dimens.s8),
+                            border: Border.all(
+                              color: selectedPlayerCard != null
+                                  ? Colors.green
+                                  : Colors.grey[700]!,
+                              width: selectedPlayerCard != null ? 2 : 1,
+                            ),
+                            boxShadow: selectedPlayerCard != null
+                                ? [
+                                    BoxShadow(
+                                      color: Colors.green.withOpacity(0.5),
+                                      offset: const Offset(0, 2),
+                                      blurRadius: 6,
+                                    ),
+                                  ]
+                                : [],
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            children: [
+                              if (displayCard.wideArt != null)
+                                Expanded(
+                                  child: Image.network(
+                                    displayCard.wideArt!,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    errorBuilder: (_, __, ___) =>
+                                        const Icon(Icons.broken_image,
+                                            color: Colors.grey),
+                                  ),
+                                ),
+                              Padding(
+                                padding: const EdgeInsets.all(Dimens.s8),
+                                child: Text(
+                                  displayCard.displayName,
+                                  style: const TextStyle(fontSize: 12),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
 
@@ -91,7 +123,7 @@ class CollectionScreen extends StatelessWidget {
 
                     // ================= Sprays (3 cards) =================
                     Text(
-                      'Sprays (${sprays.length})',
+                      'Sprays',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: Dimens.s12),
@@ -103,41 +135,77 @@ class CollectionScreen extends StatelessWidget {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       children: List.generate(
-                        sprays.length >= 3 ? 3 : sprays.length,
+                        3,
                         (index) {
-                          final spray = sprays[index];
-                          return Container(
-                            padding: const EdgeInsets.all(Dimens.s4),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[850],
-                              borderRadius: BorderRadius.circular(Dimens.s8),
-                              border: Border.all(
-                                color: Colors.grey[700]!,
-                                width: 1,
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                if (spray.displayIcon != null)
-                                  Expanded(
-                                    child: Image.network(
-                                      spray.displayIcon!,
-                                      fit: BoxFit.contain,
-                                      errorBuilder: (_, __, ___) =>
-                                          const Icon(Icons.broken_image,
-                                              color: Colors.grey),
-                                    ),
+                          final selectedSpray = selectedSprays[index];
+                          final defaultSpray = index < sprays.length ? sprays[index] : null;
+                          final displaySpray = selectedSpray ?? defaultSpray;
+
+                          return GestureDetector(
+                            onTap: () async {
+                              final chosenSpray = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => SprayDisplayScreen(
+                                    sprays: sprays,
                                   ),
-                                const SizedBox(height: Dimens.s4),
-                                Text(
-                                  spray.displayName,
-                                  style: const TextStyle(fontSize: 10),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ],
+                              );
+                              if (chosenSpray != null) {
+                                context
+                                    .read<CollectionCubit>()
+                                    .selectSpray(index, chosenSpray);
+                              }
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              padding: const EdgeInsets.all(Dimens.s4),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[850],
+                                borderRadius: BorderRadius.circular(Dimens.s8),
+                                border: Border.all(
+                                  color: selectedSpray != null
+                                      ? Colors.green
+                                      : Colors.grey[700]!,
+                                  width: selectedSpray != null ? 2 : 1,
+                                ),
+                                boxShadow: selectedSpray != null
+                                    ? [
+                                        BoxShadow(
+                                          color: Colors.green.withOpacity(0.5),
+                                          offset: const Offset(0, 2),
+                                          blurRadius: 6,
+                                        ),
+                                      ]
+                                    : [],
+                              ),
+                              child: displaySpray != null
+                                  ? Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        if (displaySpray.displayIcon != null)
+                                          Expanded(
+                                            child: Image.network(
+                                              displaySpray.displayIcon!,
+                                              fit: BoxFit.contain,
+                                              errorBuilder: (_, __, ___) =>
+                                                  const Icon(Icons.broken_image,
+                                                      color: Colors.grey),
+                                            ),
+                                          ),
+                                        const SizedBox(height: Dimens.s4),
+                                        Text(
+                                          displaySpray.displayName,
+                                          style: const TextStyle(fontSize: 10),
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    )
+                                  : const Center(
+                                      child: Icon(Icons.add, color: Colors.grey),
+                                    ),
                             ),
                           );
                         },

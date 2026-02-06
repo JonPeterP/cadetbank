@@ -50,29 +50,14 @@ class CollectionCubit extends Cubit<CollectionState> {
     );
   }
 
-  // ✅ NEW METHOD
   void selectWeaponSkin(WeaponResponse weapon, dynamic skin) {
-    state.maybeWhen(
-      loaded: (
-          weapons,
-          sprays,
-          playerCards,
-          selectedWeaponSkins,
-          ) {
+    state.maybeMap(
+      loaded: (loadedState) {
         final updatedSelections = Map<String, dynamic>.from(
-          selectedWeaponSkins,
+          loadedState.selectedWeaponSkins,
         );
-
         updatedSelections[weapon.uuid] = skin;
-
-        emit(
-          CollectionState.loaded(
-            weapons: weapons,
-            sprays: sprays,
-            playerCards: playerCards,
-            selectedWeaponSkins: updatedSelections,
-          ),
-        );
+        emit(loadedState.copyWith(selectedWeaponSkins: updatedSelections));
       },
       orElse: () {},
     );
@@ -87,5 +72,23 @@ class CollectionCubit extends Cubit<CollectionState> {
     );
   }
 
+  void selectPlayerCard(PlayerCardResponse card) {
+    state.maybeMap(
+      loaded: (loadedState) {
+        emit(loadedState.copyWith(selectedPlayerCard: card));
+      },
+      orElse: () {},
+    );
+  }
 
+  void selectSpray(int slotIndex, SprayResponse spray) {
+    state.maybeMap(
+      loaded: (loadedState) {
+        final updated = Map<int, SprayResponse>.from(loadedState.selectedSprays);
+        updated[slotIndex] = spray;
+        emit(loadedState.copyWith(selectedSprays: updated));
+      },
+      orElse: () {},
+    );
+  }
 }

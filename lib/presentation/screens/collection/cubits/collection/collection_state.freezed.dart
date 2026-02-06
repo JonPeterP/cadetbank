@@ -24,7 +24,9 @@ mixin _$CollectionState {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) =>
@@ -37,7 +39,9 @@ mixin _$CollectionState {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) =>
@@ -50,7 +54,9 @@ mixin _$CollectionState {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
@@ -151,7 +157,9 @@ class _$InitialImpl implements _Initial {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) {
@@ -167,7 +175,9 @@ class _$InitialImpl implements _Initial {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) {
@@ -183,7 +193,9 @@ class _$InitialImpl implements _Initial {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
@@ -283,7 +295,9 @@ class _$LoadingImpl implements _Loading {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) {
@@ -299,7 +313,9 @@ class _$LoadingImpl implements _Loading {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) {
@@ -315,7 +331,9 @@ class _$LoadingImpl implements _Loading {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
@@ -378,7 +396,11 @@ abstract class _$$LoadedImplCopyWith<$Res> {
       {List<WeaponResponse> weapons,
       List<SprayResponse> sprays,
       List<PlayerCardResponse> playerCards,
-      Map<String, dynamic> selectedWeaponSkins});
+      Map<String, dynamic> selectedWeaponSkins,
+      PlayerCardResponse? selectedPlayerCard,
+      Map<int, SprayResponse> selectedSprays});
+
+  $PlayerCardResponseCopyWith<$Res>? get selectedPlayerCard;
 }
 
 /// @nodoc
@@ -398,6 +420,8 @@ class __$$LoadedImplCopyWithImpl<$Res>
     Object? sprays = null,
     Object? playerCards = null,
     Object? selectedWeaponSkins = null,
+    Object? selectedPlayerCard = freezed,
+    Object? selectedSprays = null,
   }) {
     return _then(_$LoadedImpl(
       weapons: null == weapons
@@ -416,7 +440,30 @@ class __$$LoadedImplCopyWithImpl<$Res>
           ? _value._selectedWeaponSkins
           : selectedWeaponSkins // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
+      selectedPlayerCard: freezed == selectedPlayerCard
+          ? _value.selectedPlayerCard
+          : selectedPlayerCard // ignore: cast_nullable_to_non_nullable
+              as PlayerCardResponse?,
+      selectedSprays: null == selectedSprays
+          ? _value._selectedSprays
+          : selectedSprays // ignore: cast_nullable_to_non_nullable
+              as Map<int, SprayResponse>,
     ));
+  }
+
+  /// Create a copy of CollectionState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PlayerCardResponseCopyWith<$Res>? get selectedPlayerCard {
+    if (_value.selectedPlayerCard == null) {
+      return null;
+    }
+
+    return $PlayerCardResponseCopyWith<$Res>(_value.selectedPlayerCard!,
+        (value) {
+      return _then(_value.copyWith(selectedPlayerCard: value));
+    });
   }
 }
 
@@ -427,11 +474,14 @@ class _$LoadedImpl implements _Loaded {
       {required final List<WeaponResponse> weapons,
       required final List<SprayResponse> sprays,
       required final List<PlayerCardResponse> playerCards,
-      final Map<String, dynamic> selectedWeaponSkins = const {}})
+      final Map<String, dynamic> selectedWeaponSkins = const {},
+      this.selectedPlayerCard,
+      final Map<int, SprayResponse> selectedSprays = const {}})
       : _weapons = weapons,
         _sprays = sprays,
         _playerCards = playerCards,
-        _selectedWeaponSkins = selectedWeaponSkins;
+        _selectedWeaponSkins = selectedWeaponSkins,
+        _selectedSprays = selectedSprays;
 
   final List<WeaponResponse> _weapons;
   @override
@@ -468,8 +518,19 @@ class _$LoadedImpl implements _Loaded {
   }
 
   @override
+  final PlayerCardResponse? selectedPlayerCard;
+  final Map<int, SprayResponse> _selectedSprays;
+  @override
+  @JsonKey()
+  Map<int, SprayResponse> get selectedSprays {
+    if (_selectedSprays is EqualUnmodifiableMapView) return _selectedSprays;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_selectedSprays);
+  }
+
+  @override
   String toString() {
-    return 'CollectionState.loaded(weapons: $weapons, sprays: $sprays, playerCards: $playerCards, selectedWeaponSkins: $selectedWeaponSkins)';
+    return 'CollectionState.loaded(weapons: $weapons, sprays: $sprays, playerCards: $playerCards, selectedWeaponSkins: $selectedWeaponSkins, selectedPlayerCard: $selectedPlayerCard, selectedSprays: $selectedSprays)';
   }
 
   @override
@@ -482,7 +543,11 @@ class _$LoadedImpl implements _Loaded {
             const DeepCollectionEquality()
                 .equals(other._playerCards, _playerCards) &&
             const DeepCollectionEquality()
-                .equals(other._selectedWeaponSkins, _selectedWeaponSkins));
+                .equals(other._selectedWeaponSkins, _selectedWeaponSkins) &&
+            (identical(other.selectedPlayerCard, selectedPlayerCard) ||
+                other.selectedPlayerCard == selectedPlayerCard) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedSprays, _selectedSprays));
   }
 
   @override
@@ -491,7 +556,9 @@ class _$LoadedImpl implements _Loaded {
       const DeepCollectionEquality().hash(_weapons),
       const DeepCollectionEquality().hash(_sprays),
       const DeepCollectionEquality().hash(_playerCards),
-      const DeepCollectionEquality().hash(_selectedWeaponSkins));
+      const DeepCollectionEquality().hash(_selectedWeaponSkins),
+      selectedPlayerCard,
+      const DeepCollectionEquality().hash(_selectedSprays));
 
   /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -510,11 +577,14 @@ class _$LoadedImpl implements _Loaded {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) {
-    return loaded(weapons, sprays, playerCards, selectedWeaponSkins);
+    return loaded(weapons, sprays, playerCards, selectedWeaponSkins,
+        selectedPlayerCard, selectedSprays);
   }
 
   @override
@@ -526,11 +596,14 @@ class _$LoadedImpl implements _Loaded {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) {
-    return loaded?.call(weapons, sprays, playerCards, selectedWeaponSkins);
+    return loaded?.call(weapons, sprays, playerCards, selectedWeaponSkins,
+        selectedPlayerCard, selectedSprays);
   }
 
   @override
@@ -542,13 +615,16 @@ class _$LoadedImpl implements _Loaded {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(weapons, sprays, playerCards, selectedWeaponSkins);
+      return loaded(weapons, sprays, playerCards, selectedWeaponSkins,
+          selectedPlayerCard, selectedSprays);
     }
     return orElse();
   }
@@ -596,12 +672,16 @@ abstract class _Loaded implements CollectionState {
       {required final List<WeaponResponse> weapons,
       required final List<SprayResponse> sprays,
       required final List<PlayerCardResponse> playerCards,
-      final Map<String, dynamic> selectedWeaponSkins}) = _$LoadedImpl;
+      final Map<String, dynamic> selectedWeaponSkins,
+      final PlayerCardResponse? selectedPlayerCard,
+      final Map<int, SprayResponse> selectedSprays}) = _$LoadedImpl;
 
   List<WeaponResponse> get weapons;
   List<SprayResponse> get sprays;
   List<PlayerCardResponse> get playerCards;
   Map<String, dynamic> get selectedWeaponSkins;
+  PlayerCardResponse? get selectedPlayerCard;
+  Map<int, SprayResponse> get selectedSprays;
 
   /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -685,7 +765,9 @@ class _$FailedImpl implements _Failed {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)
         loaded,
     required TResult Function(String errorMessage) failed,
   }) {
@@ -701,7 +783,9 @@ class _$FailedImpl implements _Failed {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult? Function(String errorMessage)? failed,
   }) {
@@ -717,7 +801,9 @@ class _$FailedImpl implements _Failed {
             List<WeaponResponse> weapons,
             List<SprayResponse> sprays,
             List<PlayerCardResponse> playerCards,
-            Map<String, dynamic> selectedWeaponSkins)?
+            Map<String, dynamic> selectedWeaponSkins,
+            PlayerCardResponse? selectedPlayerCard,
+            Map<int, SprayResponse> selectedSprays)?
         loaded,
     TResult Function(String errorMessage)? failed,
     required TResult orElse(),
