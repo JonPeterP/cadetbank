@@ -30,8 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
             // Replace with your logo asset
             Image.asset(
               Assets.logo,
-              width: 120,
-              height: 120,
+              width: 600,
+              height: 600,
             ),
             const SizedBox(height: 24),
             const Text(

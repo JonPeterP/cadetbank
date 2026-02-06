@@ -15,7 +15,11 @@ class InitialScreen extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimens.s50),
-          child: Image.asset(Assets.logo),
+          child: Image.asset(
+            Assets.logo,
+            width: 600,
+            height: 600,
+          ),
         )
       ),
     ),
