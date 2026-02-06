@@ -1,9 +1,9 @@
-
 import 'package:cadetbank/core/di/service_locator.dart';
 import 'package:cadetbank/core/navigation/router.dart';
 import 'package:cadetbank/core/navigation/routes.dart';
 import 'package:cadetbank/core/res/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:cadetbank/presentation/screens/splash/splash_screen.dart';
 
 void main() async {
   await setupDependencies(); //setup all dependencies before irun yung application
@@ -11,17 +11,18 @@ void main() async {
 }
 
 class CadetBankApp extends StatelessWidget {
-  const CadetBankApp({super.key});
+  const CadetBankApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: appTheme,
-    initialRoute: Routes.init,
-    onGenerateRoute: AppRouter.generateRoute,
-  );
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'CadetBank',
+      theme: appTheme,
+      home: const SplashScreen(),
+      onGenerateRoute: AppRouter.generateRoute,
+    );
+  }
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
