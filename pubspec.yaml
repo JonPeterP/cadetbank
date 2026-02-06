@@ -32,7 +32,6 @@ dev_dependencies:
   retrofit_generator: ^8.1.2
   build_runner: ^2.4.11
   json_serializable: ^6.8.0
-  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
@@ -41,9 +40,3 @@ flutter:
     - lib/core/res/assets/json/
     - lib/core/res/assets/png/
     - lib/core/res/assets/webp/
-
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "lib/core/res/assets/png/ValoVault-Logo.png"
