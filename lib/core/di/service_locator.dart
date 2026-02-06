@@ -17,6 +17,7 @@ import 'package:cadetbank/domain/repositories/spray_repository.dart';
 import 'package:cadetbank/domain/repositories/weapon_repository.dart';
 import 'package:cadetbank/domain/usecases/get_player_cards_usecase.dart';
 import 'package:cadetbank/domain/usecases/get_sprays_usecase.dart';
+import 'package:cadetbank/domain/usecases/get_weapon_skins_usecase.dart';
 import 'package:cadetbank/domain/usecases/get_weapons_usecase.dart';
 import 'package:cadetbank/domain/usecases/login_usecase.dart';
 import 'package:get_it/get_it.dart';
@@ -36,6 +37,7 @@ Future<void> setupDependencies() async {
   serviceLocator.registerLazySingleton<WeaponDataSource>(() => WeaponRemoteDataSourceImpl(dio));
   serviceLocator.registerLazySingleton<WeaponRepository>(() => WeaponRepositoryImpl(serviceLocator()));
   serviceLocator.registerLazySingleton<GetWeaponsUseCase>(() => GetWeaponsUseCase(serviceLocator()));
+  serviceLocator.registerLazySingleton<GetWeaponSkinsUseCase>(() => GetWeaponSkinsUseCase(serviceLocator()));
 
   // Sprays
   serviceLocator.registerLazySingleton<SprayDataSource>(() => SprayRemoteDataSourceImpl(dio));
