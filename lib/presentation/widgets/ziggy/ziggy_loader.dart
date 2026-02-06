@@ -18,7 +18,8 @@ class ZiggyLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Lottie.asset(
       Assets.ziggyLoader,
-      height: Dimens.s16,
+      height: 120,
+      repeat: true,
     );
   }
 }

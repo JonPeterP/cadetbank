@@ -2,6 +2,7 @@ import 'package:cadetbank/core/res/values/dimens.dart';
 import 'package:cadetbank/presentation/screens/collection/cubits/collection/collection_cubit.dart';
 import 'package:cadetbank/presentation/screens/collection/cubits/collection/collection_state.dart';
 import 'package:cadetbank/presentation/screens/skins/skin_display_screen.dart';
+import 'package:cadetbank/presentation/widgets/ziggy/ziggy_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +21,7 @@ class CollectionScreen extends StatelessWidget {
         builder: (context, state) {
           return state.when(
             initial: () => const SizedBox.shrink(),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: ZiggyLoader()),
             failed: (message) => Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
